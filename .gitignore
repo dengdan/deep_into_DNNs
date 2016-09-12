@@ -1,11 +1,15 @@
-*log
-Debug
 data
 *.pkl
 *.params
 *.json
-# data
 *.rec
 *.lst
 *.zip
 *ubyte
+*.pyc
+*log
+Debug
+*.swp
+*_pb2.py
+*.ipynb_checkpoints*
+
