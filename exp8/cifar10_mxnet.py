@@ -37,13 +37,13 @@ class network:
         # network architecture
         def cnn():
             data = mx.sym.Variable('data');
-            conv1 = ConvFactory(data = data,  num_filter = 1, kernel = kernel5x5, stride = stride1x1, pad = pad2x2, name = "conv1");
-            pool1 = mx.symbol.Pooling(data = conv1, kernel = kernel3x3, stride = stride2x2 , pool_type = MAX, name='pooling1_max');
-            conv2 = ConvFactory(data = pool1, num_filter = 32, kernel = kernel5x5, stride = stride1x1, pad = pad2x2, name = 'conv2');
+            #conv1 = ConvFactory(data = data,  num_filter = 1, kernel = kernel5x5, stride = stride1x1, pad = pad2x2, name = "conv1");
+            #pool1 = mx.symbol.Pooling(data = conv1, kernel = kernel3x3, stride = stride2x2 , pool_type = MAX, name='pooling1_max');
+            conv2 = ConvFactory(data = data, num_filter = 32, kernel = kernel5x5, stride = stride1x1, pad = pad2x2, name = 'conv2');
             pool2 = mx.symbol.Pooling(data = conv2, kernel = kernel3x3, stride = stride2x2, pool_type = AVE, name='pooling2_avg');
             conv3 = ConvFactory(data = pool2, num_filter = 64, kernel = kernel5x5, stride = stride1x1, pad = pad2x2, name = 'conv3');
             pool3 = mx.symbol.Pooling(data = conv3, kernel = kernel3x3, stride = stride2x2, pool_type = AVE, name='pooling3_avg');
-            flatten = mx.symbol.Flatten(data=pool3);
+            flatten = mx.symbol.Flatten(data=pool2);
             fc1 = mx.sym.FullyConnected(data = flatten, num_hidden = 64);
             #relu1 = mx.sym.Activation(data = fc1, act_type = 'relu');
             fc2 = mx.sym.FullyConnected(data = fc1, num_hidden = 10);

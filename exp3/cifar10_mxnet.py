@@ -26,7 +26,7 @@ class network:
         stride2x2 = (2, 2);
         stride1x1 = (1, 1);
         pad2x2 = (2, 2);
-        pad2x2 = (2, 2);
+        pad1x1 = (1, 1);
         def ConvFactory(data, num_filter, kernel, stride=(1,1), pad=(0, 0), name=None, suffix=''):
             conv = mx.symbol.Convolution(data=data, num_filter=num_filter, kernel=kernel, stride=stride, pad=pad, name='%s_conv_%s' %(name, suffix))
             #bn = mx.symbol.BatchNorm(data=conv);
@@ -37,11 +37,11 @@ class network:
         # network architecture
         def cnn():
             data = mx.sym.Variable('data');
-            conv1 = ConvFactory(data = data,  num_filter = 1, kernel = kernel5x5, stride = stride1x1, pad = pad2x2, name = "conv1");
+            conv1 = ConvFactory(data = data,  num_filter = 1, kernel = kernel3x3, stride = stride1x1, pad = pad1x1, name = "conv1");
             pool1 = mx.symbol.Pooling(data = conv1, kernel = kernel3x3, stride = stride2x2 , pool_type = MAX, name='pooling1_max');
-            conv2 = ConvFactory(data = pool1, num_filter = 32, kernel = kernel5x5, stride = stride1x1, pad = pad2x2, name = 'conv2');
+            conv2 = ConvFactory(data = pool1, num_filter = 32, kernel = kernel3x3, stride = stride1x1, pad = pad1x1, name = 'conv2');
             pool2 = mx.symbol.Pooling(data = conv2, kernel = kernel3x3, stride = stride2x2, pool_type = AVE, name='pooling2_avg');
-            conv3 = ConvFactory(data = pool2, num_filter = 64, kernel = kernel5x5, stride = stride1x1, pad = pad2x2, name = 'conv3');
+            conv3 = ConvFactory(data = pool2, num_filter = 64, kernel = kernel3x3, stride = stride1x1, pad = pad1x1, name = 'conv3');
             pool3 = mx.symbol.Pooling(data = conv3, kernel = kernel3x3, stride = stride2x2, pool_type = AVE, name='pooling3_avg');
             flatten = mx.symbol.Flatten(data=pool3);
             fc1 = mx.sym.FullyConnected(data = flatten, num_hidden = 64);
@@ -160,7 +160,7 @@ class network:
                 if it % test_interval == 0 or it == niter:
                     metric.update(batch.label, exe.outputs);
                     train_acc.append(metric.get()[1]);
-                    metric.reset();
+                    metric.reset()
                     corrects = 0;
                     test_iter.reset();
                     for test_batch in test_iter:

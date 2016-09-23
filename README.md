@@ -1,1 +1,1 @@
-# deep_into_DNNs
+比较时使用cifar10数据集, 但caffe与MXNet使用的数据格式不一样, 分别存于当前目录下的caffe与mxnet文件夹中. mxnet的RecordIO格式数据由mxnet直接提供下载. caffe的lmdb文件caffe提供的工具生成, 脚本也在它的demo中可以找到.
